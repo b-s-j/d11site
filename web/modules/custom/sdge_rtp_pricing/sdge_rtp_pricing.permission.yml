@@ -1,0 +1,12 @@
+administer sdge rtp data:
+  title: 'Administer SDGE RTP data'
+  description: 'Allows users to view, add, edit, and delete real-time pricing data records.'
+  restrict access: TRUE
+  permissions:
+    - 'access content'
+    - 'administer sdge rtp data'
+    - 'view sdge rtp data'
+    - 'edit sdge rtp data'
+    - 'delete sdge rtp data'
+  
+  

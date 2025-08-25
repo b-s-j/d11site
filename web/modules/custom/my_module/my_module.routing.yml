@@ -1,0 +1,7 @@
+my_module.example:
+  path: '/my-module'
+  defaults:
+    _title: 'My Module'
+    _controller: '\Drupal\my_module\Controller\MyModuleController::viewTable'
+  requirements:
+    _permission: 'access content'

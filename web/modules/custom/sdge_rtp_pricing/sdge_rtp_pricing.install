@@ -1,0 +1,77 @@
+<?php
+
+use Drupal\Core\Installer\InstallerException;
+
+/**
+ * Implements hook_schema().
+ */
+function sdge_rtp_pricing_schema() {
+  $schema['sdge_rtp_data'] = [
+    'description' => 'Stores the SDGE Real-Time Pricing (RTP) data for CRUD.',
+    'fields' => [
+      'id' => ['type' => 'serial', 'not null' => TRUE],
+      'record_date' => ['type' => 'varchar', 'length' => 10, 'not null' => TRUE],
+      'record_time' => ['type' => 'varchar', 'length' => 8, 'not null' => TRUE, 'default' => '00:00:00'],
+      'caiso_dep' => ['type' => 'numeric', 'precision' => 10, 'scale' => 5, 'not null' => TRUE],
+      'gcc_adder' => ['type' => 'varchar', 'length' => 3, 'not null' => TRUE, 'default' => 'No'],
+      'small' => ['type' => 'numeric', 'precision' => 10, 'scale' => 6, 'not null' => TRUE],
+      'medium' => ['type' => 'numeric', 'precision' => 10, 'scale' => 6, 'not null' => TRUE],
+      'large' => ['type' => 'numeric', 'precision' => 10, 'scale' => 6, 'not null' => TRUE],
+    ],
+    'primary key' => ['id'],
+  ];
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ * Populates the table with initial data using dependency injection services.
+ */
+function sdge_rtp_pricing_install() {
+  $database = \Drupal::service('database');
+  $module_handler = \Drupal::service('module_handler');
+  $logger = \Drupal::service('logger.factory')->get('sdge_rtp_pricing');
+  
+  $data_file = $module_handler->getModule('sdge_rtp_pricing')->getPath() . '/sdge-data.json';
+
+  if (!file_exists($data_file)) {
+    $logger->error('Installation failed: sdge-data.json not found.');
+    return;
+  }
+  
+  $data = json_decode(file_get_contents($data_file), TRUE);
+
+  if (!isset($data['fdata']) || !is_array($data['fdata'])) {
+    $logger->error('Installation failed: Invalid JSON format or missing "fdata" key.');
+    return;
+  }
+
+  // Use try...catch for robust database insertion.
+  try {
+    foreach ($data['fdata'] as $item) {
+      $database->insert('sdge_rtp_data')
+        ->fields([
+          'record_date' => $item['date'],
+          'record_time' => $item['time'] ?: '00:00:00',
+          'caiso_dep' => $item['caiso_dep'],
+          'gcc_adder' => $item['gcc_adder'],
+          'small' => $item['small'],
+          'medium' => $item['medium'],
+          'large' => $item['large'],
+        ])
+        ->execute();
+    }
+  } catch (\Exception $e) {
+    $logger->error('Database insertion failed during installation: @message', ['@message' => $e->getMessage()]);
+    // Throw an exception to signal installation failure to Drupal.
+    throw new InstallerException('Initial data import failed. See logs for details.');
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function sdge_rtp_pricing_uninstall() {
+  \Drupal::service('database')->schema()->dropTable('sdge_rtp_data');
+}
+

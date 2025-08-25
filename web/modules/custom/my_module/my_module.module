@@ -1,0 +1,23 @@
+<?php
+
+
+/**
+ * Implements hook_theme().
+ *
+ * Defines the themeable unit (Twig template) for the my-module-page.
+ */
+
+
+function my_module_theme(array $existing, $type, $theme, $path) {
+  $items = [];
+  $items['my_module_page'] = [
+    'variables' => [],
+    'template' => 'my-module-page',
+  ];
+  return $items;
+}
+
+// hook attachment
+function my_module_attachment(array &$build): void {
+  $build['#attached']['library'][] = 'my_module/my_module';
+}

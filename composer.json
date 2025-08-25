@@ -23,6 +23,7 @@
         "drupal/core-recommended": "^11.2",
         "drupal/eca": "^3.0",
         "drupal/experience_builder": "^0.7@alpha",
+        "drupal/ultimate_cron": "^2.0@beta",
         "drush/drush": "^13.6"
     },
     "conflict": {

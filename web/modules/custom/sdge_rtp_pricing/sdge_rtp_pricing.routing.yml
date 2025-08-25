@@ -1,0 +1,48 @@
+# 1. READ-ONLY VIEW (Public-facing, replicates the original link)
+sdge_rtp_pricing.table:
+  path: '/sdge-rtp/table'
+  defaults:
+    _controller: '\Drupal\sdge_rtp_pricing\Controller\SdgeRtpPricingController::viewTable'
+    _title: 'Real-Time Pricing'
+  requirements:
+    _permission: 'access content'
+
+# 2. CRUD LIST VIEW (Admin only, includes add/edit/delete links)
+sdge_rtp_pricing.list:
+  path: '/sdge-rtp/data'
+  defaults:
+    _controller: '\Drupal\sdge_rtp_pricing\Controller\SdgeRtpPricingController::listData'
+    _title: 'RTP Data Administration'
+  requirements:
+    _permission: 'administer sdge rtp data' # Requires custom permission
+
+# 3. CRUD ROUTES (Add, Edit, Delete) - Pointing to placeholder forms
+sdge_rtp_pricing.add:
+  path: '/sdge-rtp/data/add'
+  defaults:
+    _form: '\Drupal\sdge_rtp_pricing\Form\RtpDataForm'
+    _title: 'Add New Record'
+  requirements:
+    _permission: 'administer sdge rtp data'
+
+sdge_rtp_pricing.edit:
+  path: '/sdge-rtp/data/{id}/edit'
+  defaults:
+    _form: '\Drupal\sdge_rtp_pricing\Form\RtpDataForm'
+    _title: 'Edit Record'
+  requirements:
+    _permission: 'administer sdge rtp data'
+  options:
+    parameters:
+      id: { type: integer }
+
+sdge_rtp_pricing.delete:
+  path: '/sdge-rtp/data/{id}/delete'
+  defaults:
+    _form: '\Drupal\sdge_rtp_pricing\Form\RtpDataDeleteForm'
+    _title: 'Delete Record'
+  requirements:
+    _permission: 'administer sdge rtp data'
+  options:
+    parameters:
+      id: { type: integer }

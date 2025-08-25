@@ -1,0 +1,50 @@
+{
+    "fdata": 
+    [
+        {
+            "date": "2025-03-06",
+            "time": "",
+            "caiso_dep": 46.48392,
+            "gcc_adder": "Yes",
+            "small": 0.046484,
+            "medium": 0.046484,
+            "large": 0.046484
+        },
+        {
+            "date": "2025-03-06",
+            "time": "01:00:00",
+            "caiso_dep": 43.44022,
+            "gcc_adder": "Yes",
+            "small": 0.04344,
+            "medium": 0.04344,
+            "large": 0.04344
+        },
+        {
+            "date": "2025-03-06",
+            "time": "02:00:00",
+            "caiso_dep": 42.56,
+            "gcc_adder": "Yes",
+            "small": 0.04256,
+            "medium": 0.04256,
+            "large": 0.04256
+        },
+        {
+            "date": "2025-03-06",
+            "time": "03:00:00",
+            "caiso_dep": 41.68,
+            "gcc_adder": "Yes",
+            "small": 0.04168,
+            "medium": 0.04168,
+            "large": 0.04168
+        },
+        {
+            "date": "2025-03-06",
+            "time": "04:00:00",
+            "caiso_dep": 40.8,
+            "gcc_adder": "Yes",
+            "small": 0.0408,
+            "medium": 0.0408,
+            "large": 0.0408
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+name: 'sdge_rtp_pricing'
+type: module
+description: 'Replicates SDGE real-time pricing data with crud functionality'
+package: Custom
+core_version_requirement: ^10 || ^11
+dependencies:
