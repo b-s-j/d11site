@@ -24,6 +24,7 @@
         "drupal/eca": "^3.0",
         "drupal/experience_builder": "^0.7@alpha",
         "drupal/ultimate_cron": "^2.0@beta",
+        "drupal/webform": "^6.3@beta",
         "drush/drush": "^13.6"
     },
     "conflict": {
