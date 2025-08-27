@@ -17,7 +17,10 @@ import {
 import { getDrupalSettings } from '@/utils/drupal-globals';
 import { Box, Flex, Text } from '@radix-ui/themes';
 import type { CodeComponent } from '@/types/CodeComponent';
-import { updatePageDataExternally } from '@/features/pageData/pageDataSlice';
+import {
+  selectPageData,
+  updatePageDataExternally,
+} from '@/features/pageData/pageDataSlice';
 import {
   selectModel,
   setUpdatePreview,
@@ -95,7 +98,7 @@ const editContentHandler = {
 const metadataHandler = {
   canHandle: (msg: any) => 'metadata' in msg && msg.metadata,
   handle: async ({ message, dispatch }: { message: any; dispatch: any }) => {
-    const value = JSON.parse(message.metadata);
+    const value = message.metadata;
     dispatch(setUpdatePreview(true));
     dispatch(
       updatePageDataExternally({
@@ -116,12 +119,14 @@ const operationsHandler = {
     availableComponents,
     layoutUtils,
     componentSelectionUtils,
+    navigate,
   }: {
     message: any;
     dispatch: any;
     availableComponents: any;
     layoutUtils: any;
     componentSelectionUtils: any;
+    navigate: any;
   }) => {
     // Logic for placing components (SDCs/Blocks/Code components) to the canvas.
     for (const op of message.operations) {
@@ -193,6 +198,8 @@ const operationsHandler = {
         }
       }
     }
+    // Redirect to /editor.
+    navigate('/editor');
   },
 };
 
@@ -224,6 +231,7 @@ function loadChatHistory() {
 }
 
 const AiWizard = () => {
+  const pageData = useAppSelector(selectPageData);
   const dispatch = useAppDispatch();
   const drupalSettings = getDrupalSettings();
   const chatElementRef = useRef<any>(null);
@@ -240,6 +248,7 @@ const AiWizard = () => {
   const textPropsMapString = JSON.stringify(textPropsMap);
   const [, setChatHistory] = useState(() => loadChatHistory());
   let isComponentRendered = false;
+  const welcomeTextRef = useRef<HTMLSpanElement>(null);
 
   // Create a ref to store current values for Deep Chat's connect prop.
   // Accessing these ensures we're working with fresh values even after the Deep
@@ -247,6 +256,7 @@ const AiWizard = () => {
   const currentValuesRef = useRef({
     codeComponentName,
     textPropsMapString,
+    pageData,
   });
 
   // Update the ref whenever tracked values change.
@@ -254,8 +264,9 @@ const AiWizard = () => {
     currentValuesRef.current = {
       codeComponentName,
       textPropsMapString,
+      pageData,
     };
-  }, [codeComponentName, textPropsMapString]);
+  }, [codeComponentName, textPropsMapString, pageData]);
   // Access layoutUtils and componentSelectionUtils from drupalSettings.xb
   const layoutUtils = drupalSettings.xb?.layoutUtils as any;
   const componentSelectionUtils = drupalSettings.xb
@@ -265,16 +276,28 @@ const AiWizard = () => {
   const theLayoutModel = useAppSelector(
     (state) => state?.layoutModel?.present as LayoutModelSliceState,
   );
+  const layoutModelRef = useRef(theLayoutModel);
+  useEffect(() => {
+    layoutModelRef.current = theLayoutModel;
+  }, [theLayoutModel]);
   const selectedComponent = useAppSelector(
     (state) => state.ui.selection.items[0],
   );
   const { data: availableComponents } = useGetComponentsQuery();
+  const componentsRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (availableComponents && !componentsRef.current) {
+      componentsRef.current = availableComponents;
+    }
+  }, [availableComponents]);
 
   // Helper to transform the current layout into a JSON representation.
   const transformLayout = () => {
-    if (!theLayoutModel?.layout) return null;
+    const theLayout = layoutModelRef.current;
+    if (!theLayout?.layout) return null;
     const result: any = { layout: {} };
-    theLayoutModel.layout.forEach((region, regionIndex) => {
+    theLayout.layout.forEach((region, regionIndex) => {
       result.layout[region.id] = {
         nodePathPrefix: [regionIndex],
         components: [],
@@ -357,34 +380,31 @@ const AiWizard = () => {
     async (message: any) => {
       try {
         const handlers = getHandlersForMessage(message);
-        // If the handler is operationsHandler, do not await it here.
-        if (handlers.some((h) => h === operationsHandler)) {
-          // Show the message in the chat immediately.
-          setTimeout(() => {
-            // Do the async work in the background.
-            operationsHandler.handle({
+        for (const handler of handlers) {
+          // If the handler is operationsHandler, do not await it here.
+          if (handler === operationsHandler) {
+            setTimeout(() => {
+              // Do the async work in the background.
+              operationsHandler.handle({
+                message,
+                dispatch,
+                availableComponents: componentsRef.current,
+                layoutUtils,
+                componentSelectionUtils,
+                navigate,
+              });
+            }, 0);
+          } else {
+            await handler.handle({
               message,
               dispatch,
-              availableComponents,
+              createCodeComponent,
+              navigate,
+              availableComponents: componentsRef.current,
               layoutUtils,
               componentSelectionUtils,
             });
-          }, 0);
-          // Return the message to DeepChat so it is displayed immediately.
-          return { text: message.message };
-        }
-
-        // For other handlers, await as usual.
-        for (const handler of handlers) {
-          await handler.handle({
-            message,
-            dispatch,
-            createCodeComponent,
-            navigate,
-            availableComponents,
-            layoutUtils,
-            componentSelectionUtils,
-          });
+          }
         }
         return { text: message.message };
       } catch (error) {
@@ -399,7 +419,6 @@ const AiWizard = () => {
       dispatch,
       createCodeComponent,
       navigate,
-      availableComponents,
       layoutUtils,
       componentSelectionUtils,
     ],
@@ -411,6 +430,9 @@ const AiWizard = () => {
     const handler = (event: { detail: { message: any; isHistory: any } }) => {
       const { message, isHistory } = event.detail;
       if (!isHistory) {
+        if (welcomeTextRef.current) {
+          welcomeTextRef.current.style.display = 'none';
+        }
         const oldHistoryStr = sessionStorage.getItem(SESSION_STORAGE_KEY);
         const oldHistory = oldHistoryStr ? JSON.parse(oldHistoryStr) : [];
         const updated = [...oldHistory, message];
@@ -423,15 +445,18 @@ const AiWizard = () => {
     };
   }, [csrfToken]);
 
-  // Set up the chat element to handle messages and history.
-  useEffect(() => {
-    if (chatElementRef.current && csrfToken) {
-      // Load chat history from sessionStorage.
-      chatElementRef.current.loadHistory = () => {
-        return loadChatHistory();
-      };
+  // Handle text input changes to enable/disable submit button.
+  const handleTextInput = () => {
+    const chatEl = chatElementRef.current;
+    const deepChatEl = document.querySelector('deep-chat') as any;
+    const inputText =
+      deepChatEl?.shadowRoot?.querySelector('#text-input')?.textContent || '';
+    if (inputText.trim().length > 0) {
+      chatEl.disableSubmitButton(false);
+    } else {
+      chatEl.disableSubmitButton();
     }
-  }, [csrfToken, receiveMessage]);
+  };
 
   return (
     csrfToken && (
@@ -456,12 +481,13 @@ const AiWizard = () => {
               <Text className={styles.aiWizardBeta}>Beta</Text>
             </Box>
           </Flex>
-          <Text className={styles.aiWizardSubtitle}>
+          <Text ref={welcomeTextRef} className={styles.aiWizardSubtitle}>
             Hello, how can I help you today?
           </Text>
         </Flex>
         <DeepChat
           ref={chatElementRef}
+          history={loadChatHistory()}
           images={{
             files: {
               acceptedFormats: '.jpg, .png, .jpeg',
@@ -537,6 +563,12 @@ const AiWizard = () => {
                     active_component_uuid: selectedComponent ?? '',
                     current_layout: transformLayout(),
                     derived_proptypes: fixtureProps,
+                    page_title:
+                      currentValuesRef.current.pageData['title[0][value]'],
+                    page_description:
+                      currentValuesRef.current.pageData[
+                        'description[0][value]'
+                      ],
                   });
                   headers['Content-Type'] = 'application/json';
                 }
@@ -559,13 +591,18 @@ const AiWizard = () => {
                   role: 'error',
                 });
               }
+              setTimeout(() => {
+                chatElementRef.current?.disableSubmitButton();
+              }, 0);
             },
           }}
+          onInput={handleTextInput}
           onComponentRender={() => {
             if (!isComponentRendered) {
               chatElementRef.current.clearMessages();
               sessionStorage.removeItem(SESSION_STORAGE_KEY);
               setChatHistory([]);
+              chatElementRef.current.disableSubmitButton();
               isComponentRendered = true;
             }
           }}

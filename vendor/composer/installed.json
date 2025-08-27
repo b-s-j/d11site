@@ -1750,18 +1750,18 @@
         },
         {
             "name": "drupal/experience_builder",
-            "version": "0.7.3-alpha1",
-            "version_normalized": "0.7.3.0-alpha1",
+            "version": "0.7.4-alpha1",
+            "version_normalized": "0.7.4.0-alpha1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/experience_builder.git",
-                "reference": "0.7.3-alpha1"
+                "reference": "0.7.4-alpha1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/experience_builder-0.7.3-alpha1.zip",
-                "reference": "0.7.3-alpha1",
-                "shasum": "41141110ba9a55e9ed9c9d55ceb4873bad903f85"
+                "url": "https://ftp.drupal.org/files/projects/experience_builder-0.7.4-alpha1.zip",
+                "reference": "0.7.4-alpha1",
+                "shasum": "96e010fef578a85584f7ad7eca513e3786ba7b48"
             },
             "require": {
                 "drupal/core": "^11.2",
@@ -1782,8 +1782,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "0.7.3-alpha1",
-                    "datestamp": "1753882081",
+                    "version": "0.7.4-alpha1",
+                    "datestamp": "1756144559",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
@@ -1935,6 +1935,81 @@
                 "issues": "https://drupal.org/project/issues/modeler_api"
             },
             "install-path": "../../web/modules/contrib/modeler_api"
+        },
+        {
+            "name": "drupal/token",
+            "version": "1.15.0",
+            "version_normalized": "1.15.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/token.git",
+                "reference": "8.x-1.15"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/token-8.x-1.15.zip",
+                "reference": "8.x-1.15",
+                "shasum": "5916fbccc86458a5f51e71f832ac70ff4c84ebdf"
+            },
+            "require": {
+                "drupal/core": "^9.2 || ^10 || ^11"
+            },
+            "require-dev": {
+                "drupal/book": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.15",
+                    "datestamp": "1722206211",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                },
+                "drush": {
+                    "services": {
+                        "drush.services.yml": ">=9"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "berdir",
+                    "homepage": "https://www.drupal.org/user/214652"
+                },
+                {
+                    "name": "dave reid",
+                    "homepage": "https://www.drupal.org/user/53892"
+                },
+                {
+                    "name": "eaton",
+                    "homepage": "https://www.drupal.org/user/16496"
+                },
+                {
+                    "name": "fago",
+                    "homepage": "https://www.drupal.org/user/16747"
+                },
+                {
+                    "name": "greggles",
+                    "homepage": "https://www.drupal.org/user/36762"
+                },
+                {
+                    "name": "mikeryan",
+                    "homepage": "https://www.drupal.org/user/4420"
+                }
+            ],
+            "description": "Provides a user interface for the Token API, some missing core tokens.",
+            "homepage": "https://www.drupal.org/project/token",
+            "support": {
+                "source": "https://git.drupalcode.org/project/token"
+            },
+            "install-path": "../../web/modules/contrib/token"
         },
         {
             "name": "drupal/ultimate_cron",
