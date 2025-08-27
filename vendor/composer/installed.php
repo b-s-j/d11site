@@ -3,7 +3,7 @@
         'name' => 'drupal/recommended-project',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '843553be66970ab4c056eb7c69cad35d0dd94c64',
+        'reference' => '7afc65ebfc0d65148a2823308ba79c9b4d5a75ec',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -391,7 +391,7 @@
         'drupal/recommended-project' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '843553be66970ab4c056eb7c69cad35d0dd94c64',
+            'reference' => '7afc65ebfc0d65148a2823308ba79c9b4d5a75ec',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -624,6 +624,15 @@
             'install_path' => __DIR__ . '/../phpowermove/docblock',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'phpstan/phpstan' => array(
+            'pretty_version' => '2.1.22',
+            'version' => '2.1.22.0',
+            'reference' => '41600c8379eb5aee63e9413fe9e97273e25d57e4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpstan/phpstan',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'psr/cache' => array(
             'pretty_version' => '3.0.0',
