@@ -3,76 +3,61 @@
 namespace Drupal\dynamic_pricing\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Extension\ModuleExtensionList;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+
 
 /**
- * Controller for the Dynamic Pricing page.
+ * Controller for Dynamic Pricing.
  */
 class DynamicPricingController extends ControllerBase {
 
   /**
-   * @var \Drupal\Core\Extension\ModuleExtensionList
-   */
-  protected $moduleExtensionList;
-
-  /**
-   * Dependency injection for ModuleExtensionList service.
-   * This helps us get the module's file path correctly.
-   */
-  public function __construct(ModuleExtensionList $module_extension_list) {
-    $this->moduleExtensionList = $module_extension_list;
-  }
-
-  /**
-   * {@inheritdoc}
-   * Factory method to create the controller with the service container.
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('extension.list.module')
-    );
-  }
-
-  /**
-   * Loads pricing data from a JSON file located in the module root.
+   * Loads pricing data from JSON file.
    *
-   * @return array
-   *   The pricing data array, or an empty array on failure.
+   * @return array<int, array<string, mixed>>
+   *   Array of pricing data items.
    */
-  private function loadPricingData() {
-    $module_path = $this->moduleExtensionList->getPath('dynamic_pricing');
+  private function loadPricingData(): array {
+    $module_path = \Drupal::service('extension.list.module')->getPath('dynamic_pricing');
     $file_path = DRUPAL_ROOT . '/' . $module_path . '/dynamic-data.json';
 
     if (!file_exists($file_path)) {
-      $this->messenger()->addError('ERROR: Pricing data file (dynamic-data.json) not found.');
       return [];
     }
 
     $json_content = file_get_contents($file_path);
-    $data = json_decode($json_content, TRUE);
+    if ($json_content === false) {
+      return [];
+    }
 
-    return $data['fdata'] ?? [];
+    $data = json_decode($json_content, true);
+    if (!is_array($data) || !isset($data['fdata']) || !is_array($data['fdata'])) {
+      return [];
+    }
+
+    return $data['fdata'];
   }
 
   /**
-   * Builds the pricing table page.
+   * Builds dynamic pricing page.
    *
    * @return array
-   *   Render array passed to Twig.
+   *   Render array.
    */
-  public function build() {
+  public function build(): array {
     $data = $this->loadPricingData();
+
     $today_data = [];
     $tomorrow_data = [];
 
     if (!empty($data)) {
-      $first_date = $data[0]['date'];
+      $first_date = $data[0]['date'] ?? '';
       foreach ($data as $item) {
+        if (!is_array($item) || !isset($item['date'])) {
+          continue;
+        }
         if ($item['date'] === $first_date) {
           $today_data[] = $item;
-        }
-        else {
+        } else {
           $tomorrow_data[] = $item;
         }
       }
