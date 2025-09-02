@@ -1,0 +1,24 @@
+# English, British translation of Entity Print (8.x-2.18)
+# Copyright (c) 2025 by the English, British translation team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Entity Print (8.x-2.18)\n"
+"POT-Creation-Date: 2025-07-17 13:46+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Language-Team: English, British\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+msgid "Username"
+msgstr "Username"
+msgid "Password"
+msgstr "Password"
+msgid "- None -"
+msgstr "- None -"
+msgid "View"
+msgstr "View"
+msgid "Image style"
+msgstr "Image style"
