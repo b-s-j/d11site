@@ -1,0 +1,39 @@
+<?php
+/**
+ * Implements hook_help().
+ */
+function dynamic_pricing_help($route_name, $route_parameters) {
+  switch ($route_name) {
+    case 'help.page.dynamic_pricing':
+      drupal_set_title(t('Dynamic Pricing'));
+      drupal_add_temporary_meta('description', t('Help page for the Dynamic Pricing module.'));
+      break;
+  }
+}
+/**
+ * Implements hook_theme().
+ */
+function dynamic_pricing_theme($existing, $type, $theme, $path) {
+  return [
+    'dynamic_pricing_table' => [
+      'variables' => [
+        'today_data' => [],
+        'tomorrow_data' => [],
+        'today_date_display' => NULL,
+        'tomorrow_date_display' => NULL,
+      ],
+      'template' => 'dynamic-pricing-page',
+    ],
+  ];
+}
+
+/**
+ * @file
+ * this hook allows you to use or attached pricing_assets
+ *
+ */
+function dynamic_pricing_page_attachments(array &$attachments) {
+   \Drupal::logger('dynamic_pricing')->notice('Pricing assets attached');
+  $attachments['#attached']['library'][] = 'dynamic_pricing/pricing_assets';
+}
+

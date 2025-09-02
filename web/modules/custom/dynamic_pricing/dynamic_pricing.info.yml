@@ -1,0 +1,8 @@
+name: Dynamic Pricing
+description: Provides dynamic pricing adjustments based on real-time data.
+type: module
+core_version_requirement: ^10 || ^11
+package: Custom
+
+libraries:
+  - dynamic_pricing/pricing_assets

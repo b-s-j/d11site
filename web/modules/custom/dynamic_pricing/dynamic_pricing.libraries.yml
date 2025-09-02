@@ -1,0 +1,10 @@
+pricing_assets:
+  version: 1.x
+  css:
+    theme:
+      css/dynamic_pricing.css: {}
+  js:
+    js/dynamic_pricing.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
