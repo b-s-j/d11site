@@ -1,0 +1,25 @@
+parameters:
+    # Gaano ka-strict ang analysis (0 = pinaka-loose, 9 = pinaka-strict).
+    level: 5
+
+    # I-scan lang ang custom code mo (hindi core/contrib/vendor para bumilis at di mag-spam ng errors).
+    paths:
+        - web/modules/custom
+        - web/themes/custom
+
+    # Exclude Drupal core, contrib modules, vendor packages.
+    excludePaths:
+        analyse:
+            - web/core
+            - web/modules/contrib
+            - vendor
+
+    # Optional: file extensions na kasama sa scan
+    fileExtensions:
+        - php
+        - module
+        - inc
+        - install
+        - theme
+    parameters:
+    treatPhpDocTypesAsCertain: false

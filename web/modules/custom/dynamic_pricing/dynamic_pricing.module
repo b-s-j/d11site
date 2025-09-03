@@ -1,15 +1,5 @@
 <?php
-/**
- * Implements hook_help().
- */
-function dynamic_pricing_help($route_name, $route_parameters) {
-  switch ($route_name) {
-    case 'help.page.dynamic_pricing':
-      drupal_set_title(t('Dynamic Pricing'));
-      drupal_add_temporary_meta('description', t('Help page for the Dynamic Pricing module.'));
-      break;
-  }
-}
+
 /**
  * Implements hook_theme().
  */
