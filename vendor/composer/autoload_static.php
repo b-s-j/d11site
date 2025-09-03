@@ -120,10 +120,6 @@ class ComposerStaticInit9d559ab354f63dc7e9a3fc1a03ad7d46
             'Lcobucci\\Clock\\' => 15,
             'Laravel\\Prompts\\' => 16,
         ),
-        'J' => 
-        array (
-            'JsonSchema\\' => 11,
-        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
@@ -424,10 +420,6 @@ class ComposerStaticInit9d559ab354f63dc7e9a3fc1a03ad7d46
         'Laravel\\Prompts\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/prompts/src',
-        ),
-        'JsonSchema\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

@@ -1,97 +1,107 @@
 {{ attach_library('dynamic_pricing/pricing_assets') }}
 
-{# File: dynamic_pricing/templates/dynamic-pricing-page.html.twig #}
-<nav class="navbar">
-  <div class="navbar-container">
-    <a class="navbar-brand" href="#">SDGE Pricing</a>
-    <ul class="navbar-nav">
-      <li><a class="nav-link active" href="#">Home</a></li>
-      <li><a class="nav-link" href="#">Pricing Plans</a></li>
-      <li><a class="nav-link" href="#">Contact Us</a></li>
-    </ul>
-  </div>
-</nav>
 
 <div class="pricing-container">
-  <h2 class="title">Dynamic Day Ahead Pricing</h2>
+	<h2 class="title">Dynamic Day Ahead Pricing</h2>
 
-  <div class="grid">
-    {# === TODAY TABLE === #}
-    <div class="grid-item">
-      <h3 class="subtitle">Today</h3>
-      <p class="muted">{{ today_date_display|date('F j, Y') }}</p>
+	<div class="tables-wrapper">
+		<div class="table-item">
+			<h3 class="subtitle">Today</h3>
+			<p class="muted">{{ today_date_display|date('F j, Y') }}</p>
 
-      <div class="table-wrapper">
-        <table class="pricing-table">
-          <thead>
-            <tr>
-              <th colspan="3"></th>
-              <th colspan="3" class="highlight">Total Prices ($/KWh)</th>
-            </tr>
-            <tr>
-              <th>Hour</th>
-              <th>CAISO Price</th>
-              <th>GCC Adder</th>
-              <th>Small</th>
-              <th>Medium</th>
-              <th>Large</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in today_data %}
-              <tr>
-                <td>{{ item.time }}</td>
-                <td>{{ item.caiso_dep }}</td>
-                <td>{{ item.gcc_adder }}</td>
-                <td>{{ item.small }}</td>
-                <td>{{ item.medium }}</td>
-                <td>{{ item.large }}</td>
-              </tr>
-            {% else %}
-              <tr><td colspan="6">No pricing data available for today.</td></tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
+			<table class="pricing-table">
+				<thead>
+					<tr>
+						<th colspan="3"></th>
+						<th colspan="3" class="highlight">Total Prices ($/KWh)</th>
+					</tr>
+					<tr>
+						<th class="highlight">Hour</th>
+						<th class="highlight">CAISO Price</th>
+						<th class="highlight">GCC Adder</th>
+						<th class="highlight">Small</th>
+						<th class="highlight">Medium</th>
+						<th class="highlight">Large</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in today_data %}
+						<tr>
+							<td>{{ item.time }}</td>
+							<td>{{ item.caiso_dep }}</td>
+							<td>{{ item.gcc_adder }}</td>
+							<td>{{ item.small }}</td>
+							<td>{{ item.medium }}</td>
+							<td>{{ item.large }}</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="6">No pricing data available for today.</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 
-    {# === TOMORROW TABLE === #}
-    <div class="grid-item">
-      <h3 class="subtitle">Tomorrow</h3>
-      <p class="muted">{{ tomorrow_date_display|date('F j, Y') }}</p>
 
-      <div class="table-wrapper">
-        <table class="pricing-table">
-          <thead>
-            <tr>
-              <th colspan="3"></th>
-              <th colspan="3" class="highlight">Total Prices ($/KWh)</th>
-            </tr>
-            <tr>
-              <th>Hour</th>
-              <th>CAISO Price</th>
-              <th>GCC Adder</th>
-              <th>Small</th>
-              <th>Medium</th>
-              <th>Large</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in tomorrow_data %}
-              <tr>
-                <td>{{ item.time }}</td>
-                <td>{{ item.caiso_dep }}</td>
-                <td>{{ item.gcc_adder }}</td>
-                <td>{{ item.small }}</td>
-                <td>{{ item.medium }}</td>
-                <td>{{ item.large }}</td>
-              </tr>
-            {% else %}
-              <tr><td colspan="6">No pricing data available for tomorrow.</td></tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+		<div class="table-item">
+			<h3 class="subtitle">Tomorrow</h3>
+			<p class="muted">{{ tomorrow_date_display|date('F j, Y') }}</p>
+
+			<table class="pricing-table">
+				<thead>
+					<tr>
+						<th colspan="3"></th>
+						<th colspan="3" class="highlight">Total Prices ($/KWh)</th>
+					</tr>
+					<tr>
+						<th class="highlight">Hour</th>
+						<th class="highlight">CAISO Price</th>
+						<th class="highlight">GCC Adder</th>
+						<th class="highlight">Small</th>
+						<th class="highlight">Medium</th>
+						<th class="highlight">Large</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in tomorrow_data %}
+						<tr>
+							<td>{{ item.time }}</td>
+							<td>{{ item.caiso_dep }}</td>
+							<td>{{ item.gcc_adder }}</td>
+							<td>{{ item.small }}</td>
+							<td>{{ item.medium }}</td>
+							<td>{{ item.large }}</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="6">No pricing data available for tomorrow.</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
+<div style="clear:both;">&nbsp;</div>
+<p class="p-bottom">
+	<div class="builder-element-inner">
+		<div class="builder-element-inside">
+			<div class="builder-element-children-wrapper">
+				<div class="builder-element-inside-inner">
+					<h2 aria-level="2" role="heading">Rate Details&nbsp;</h2>
+					<p>Export pricing in the Dynamic Export Rate Pilot is based on the CAISO day-ahead hourly price and includes an added Generation Capacity Component during event hours.</p>
+					<ul role="list">
+						<li>
+							<strong>CAISO Day-Ahead Hourly Price:</strong>
+							The CAISO day-ahead market hourly prices will be published daily by 6 p.m. on a dedicated page of sdge.com. If the CAISO day-ahead hourly prices are not published by SDG&amp;E by 5 p.m. for the day-ahead market, the prior day’s CAISO day-ahead hourly prices will be the effective CAISO day-ahead hourly prices. CAISO market data posted or corrected after 5pm will not be used for Dynamic Export Rate Pilot calculations and after-the-fact rate adjustments will not be made.</li>
+					</ul>
+					<ul role="list">
+						<li>
+							<strong>Generation Capacity Component (GCC):</strong>&nbsp;The GCC is an adder based on marginal generation capacity costs only and is applied to the top 150 system peak hours.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</p></div>

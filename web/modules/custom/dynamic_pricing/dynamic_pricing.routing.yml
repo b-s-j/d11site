@@ -2,5 +2,6 @@ dynamic_pricing.data:
   path: "/dynamic-pricing/data"
   defaults:
     _controller: '\Drupal\dynamic_pricing\Controller\DynamicPricingController::build'
+    _title: "Dynamic Pricing"
   requirements:
     _permission: "access content"

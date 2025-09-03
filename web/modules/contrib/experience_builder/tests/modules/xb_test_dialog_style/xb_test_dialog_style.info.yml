@@ -1,8 +1,0 @@
-name: 'Test dialog styling in component inputs form '
-type: module
-package: Testing
-
-# Information added by Drupal.org packaging script on 2025-08-25
-version: '0.7.4-alpha1'
-project: 'experience_builder'
-datestamp: 1756144310

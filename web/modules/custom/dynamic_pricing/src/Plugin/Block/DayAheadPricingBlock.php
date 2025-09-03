@@ -26,9 +26,18 @@ class DayAheadPricingBlock extends BlockBase implements ContainerFactoryPluginIn
   protected ModuleExtensionList $moduleExtensionList;
 
   /**
-   * {@inheritdoc}
+   * Constructs a new DayAheadPricingBlock instance.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param mixed $plugin_id
+   *   The plugin ID for the block.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Extension\ModuleExtensionList $moduleExtensionList
+   *   The module extension list service.
    */
-  public function __construct(array $configuration, string $plugin_id, $plugin_definition, ModuleExtensionList $moduleExtensionList) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ModuleExtensionList $moduleExtensionList) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->moduleExtensionList = $moduleExtensionList;
   }
@@ -36,8 +45,8 @@ class DayAheadPricingBlock extends BlockBase implements ContainerFactoryPluginIn
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, string $plugin_id, $plugin_definition): self {
-    return new self(
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
@@ -53,17 +62,14 @@ class DayAheadPricingBlock extends BlockBase implements ContainerFactoryPluginIn
    */
   private function loadPricingData(): array {
     $module_path = $this->moduleExtensionList->getPath('dynamic_pricing');
-    if (!is_string($module_path)) {
-      return [];
-    }
-
     $file_path = DRUPAL_ROOT . '/' . $module_path . '/dynamic-data.json';
+
     if (!file_exists($file_path)) {
       return [];
     }
 
     $json_content = file_get_contents($file_path);
-    if (!is_string($json_content)) {
+    if ($json_content === false) {
       return [];
     }
 
@@ -84,7 +90,7 @@ class DayAheadPricingBlock extends BlockBase implements ContainerFactoryPluginIn
     $today_data = [];
     $tomorrow_data = [];
 
-    if (!empty($data) && is_array($data)) {
+    if (!empty($data)) {
       $first_date = $data[0]['date'] ?? '';
       foreach ($data as $item) {
         if (!is_array($item) || !isset($item['date'])) {
