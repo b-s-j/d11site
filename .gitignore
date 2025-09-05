@@ -1,0 +1,51 @@
+
+# Ignore core and contrib files downloaded by Composer.
+core/
+vendor/
+
+# Ignore Drupal's generated files.
+sites/*/files/
+sites/*/private/
+sites/simpletest/
+
+# Ignore local config (not meant for production).
+sites/*/settings*.php
+sites/*/services*.yml
+
+# Ignore compiled and cache files.
+*.log
+*.tmp
+*.temp
+*.cache
+*.gz
+*.swp
+*.swo
+
+# Ignore environment-specific files.
+.env
+.env.local
+.env.*.local
+
+# Ignore PHPUnit local cache.
+.phpunit.result.cache
+
+# Ignore IDE/editor files.
+.vscode/
+.idea/
+*.iml
+
+# Ignore OS files.
+.DS_Store
+Thumbs.db
+
+# Ignore Composer lock if you're not locking deps (optional).
+# composer.lock
+
+# Ignore npm/yarn logs if using frontend builds.
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore node_modules if frontend dependencies exist.
+node_modules/
+
