@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Implements hook_schema().
@@ -41,4 +41,98 @@ function dynamic_pricing_schema() {
   ];
 
   return $schema;
+}
+
+
+/**
+ * webform schema
+ */
+
+
+/**
+ * Implements hook_schema().
+ */
+function drah_webform_schema() {
+  $webformschema['dynamic_pricing_accounts'] = [
+    'description' => 'Stores valid DRAH account information.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique account ID.',
+      ],
+      'account_number' => [
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+        'description' => 'The valid SDG&E account number.',
+      ],
+      'is_business' => [
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => '1 if it is a business account, 0 for individual.',
+      ],
+      'first_name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE, // Maaaring walang laman kung business account.
+        'description' => 'The first name of the individual.',
+      ],
+      'last_name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE, // Maaaring walang laman kung business account.
+        'description' => 'The last name of the individual.',
+      ],
+      'business_name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE, // Maaaring walang laman kung individual account.
+        'description' => 'The name of the business.',
+      ],
+      'email' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'The account holder\'s email address.',
+      ],
+    ],
+    'primary key' => ['id'],
+    'unique keys' => [
+      'account_number' => ['account_number'],
+    ],
+  ];
+
+  return $webformschema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function dynamic_pricing_install() {
+  // Sample data: 5 individual accounts, 5 business accounts.
+  $valid_entries = [
+    // INDIVIDUAL ACCOUNTS (is_business = 0)
+    ['account_number' => '548769321012', 'is_business' => 0, 'first_name' => 'Juan', 'last_name' => 'Dela Cruz', 'business_name' => NULL, 'email' => 'juan.d@example.com'],
+    ['account_number' => '890123456789', 'is_business' => 0, 'first_name' => 'Maria', 'last_name' => 'Santos', 'business_name' => NULL, 'email' => 'maria.s@example.com'],
+    ['account_number' => '102938475610', 'is_business' => 0, 'first_name' => 'Jose', 'last_name' => 'Rizal', 'business_name' => NULL, 'email' => 'jose.r@example.com'],
+    ['account_number' => '765432109876', 'is_business' => 0, 'first_name' => 'Susan', 'last_name' => 'Roces', 'business_name' => NULL, 'email' => 'susan.r@example.com'],
+    ['account_number' => '112233445566', 'is_business' => 0, 'first_name' => 'John', 'last_name' => 'Doe', 'business_name' => NULL, 'email' => 'john.d@example.com'],
+
+    // BUSINESS ACCOUNTS (is_business = 1)
+    ['account_number' => '998877665544', 'is_business' => 1, 'first_name' => NULL, 'last_name' => NULL, 'business_name' => 'ABC Corporation', 'email' => 'info@abc.com'],
+    ['account_number' => '213456789012', 'is_business' => 1, 'first_name' => NULL, 'last_name' => NULL, 'business_name' => 'XYZ Holdings', 'email' => 'contact@xyz.com'],
+    ['account_number' => '304567891234', 'is_business' => 1, 'first_name' => NULL, 'last_name' => NULL, 'business_name' => 'Global Solutions Inc.', 'email' => 'global.sol@example.com'],
+    ['account_number' => '495867341256', 'is_business' => 1, 'first_name' => NULL, 'last_name' => NULL, 'business_name' => 'Tech Innovations', 'email' => 'tech.inno@example.com'],
+    ['account_number' => '876543219012', 'is_business' => 1, 'first_name' => NULL, 'last_name' => NULL, 'business_name' => 'Pioneer Enterprises', 'email' => 'pioneer@example.com'],
+  ];
+
+  $database = \Drupal::database();
+  foreach ($valid_entries as $entry) {
+    $database->insert('dynamic_pricing_accounts')
+      ->fields($entry)
+      ->execute();
+  }
 }
