@@ -1,0 +1,16 @@
+uuid: e92b6c16-79bb-438a-a5da-915f84d8f598
+langcode: en
+status: true
+dependencies:
+  module:
+    - gutenberg
+  enforced:
+    module:
+      - gutenberg
+_core:
+  default_config_hash: FGO-dcYn4LpdUwSbi3hdp6Oq8RpDo-ipSbTuyv7fLWY
+id: reusable_block_delete_action
+label: 'Delete pattern'
+type: block_content
+plugin: reusable_block_delete_action
+configuration: {  }

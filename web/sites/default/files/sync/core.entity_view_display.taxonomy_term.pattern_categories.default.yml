@@ -1,0 +1,18 @@
+uuid: 87ba1949-381b-494b-a3d1-cb7909434e39
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.pattern_categories
+_core:
+  default_config_hash: ubRGxADCDExzgkufoibVvMmTMnpjanHml1TzsyyTDn4
+id: taxonomy_term.pattern_categories.default
+targetEntityType: taxonomy_term
+bundle: pattern_categories
+mode: default
+content: {  }
+hidden:
+  description: true
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true

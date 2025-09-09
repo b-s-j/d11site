@@ -31,13 +31,13 @@
         "drupal/gutenberg": "^3.0",
         "drupal/inline_entity_form": "^3.0@RC",
         "drupal/paragraphs": "^1.19",
-        "drupal/project_browser": "^2.1@beta",
         "drupal/search_api": "^1.38",
         "drupal/search_api_db": "^1.38",
         "drupal/simple_oauth": "^6.0",
         "drupal/token": "^1.16",
         "drupal/ultimate_cron": "^2.0@beta",
         "drupal/webform": "^6.3@beta",
+        "drupal/webform_remote_handlers": "^3.0",
         "drush/drush": "^13.6"
     },
     "conflict": {
@@ -119,6 +119,9 @@
         }
     },
     "require-dev": {
-        "phpstan/phpstan": "^2.1"
+        "mglaman/phpstan-drupal": "^2.0",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "squizlabs/php_codesniffer": "^3.13"
     }
 }

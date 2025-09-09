@@ -1,0 +1,45 @@
+{
+  "name": "drupal/webform_remote_handlers",
+  "description": "Provides Webform handlers that integrate with a REST or SOAP servers.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+      {
+          "name": "-nrzr-",
+          "homepage": "https://www.drupal.org/user/3522063"
+      },
+      {
+          "name": "dgaspara",
+          "homepage": "https://www.drupal.org/user/3557179"
+      },
+      {
+          "name": "joaomarques736",
+          "homepage": "https://www.drupal.org/user/3557181"
+      },
+      {
+          "name": "nsalves",
+          "homepage": "https://www.drupal.org/user/3557178"
+      },
+      {
+          "name": "pmaiacar",
+          "homepage": "https://www.drupal.org/user/3575425"
+      },
+      {
+          "name": "ricardotenreiro",
+          "homepage": "https://www.drupal.org/user/213132"
+      },
+      {
+          "name": "sara_asb",
+          "homepage": "https://www.drupal.org/user/3673657"
+      },
+      {
+          "name": "tmiguelv",
+          "homepage": "https://www.drupal.org/user/3612421"
+      }
+  ],
+  "require": {
+    "drupal/core": "^8 || ^9 || ^10 || ^11",
+    "drupal/webform": "*",
+    "php": ">=8.1"
+  }
+}

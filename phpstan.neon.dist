@@ -1,25 +1,29 @@
-parameters:
-    # Gaano ka-strict ang analysis (0 = pinaka-loose, 9 = pinaka-strict).
-    level: 5
+includes:
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/mglaman/phpstan-drupal/extension.neon
+    - vendor/mglaman/phpstan-drupal/rules.neon
 
-    # I-scan lang ang custom code mo (hindi core/contrib/vendor para bumilis at di mag-spam ng errors).
+parameters:
+    level: 5  # start mid-level, huwag muna max para di ka malunod
+
     paths:
         - web/modules/custom
         - web/themes/custom
 
-    # Exclude Drupal core, contrib modules, vendor packages.
     excludePaths:
         analyse:
             - web/core
             - web/modules/contrib
             - vendor
 
-    # Optional: file extensions na kasama sa scan
     fileExtensions:
         - php
         - module
         - inc
         - install
         - theme
-    parameters:
+
     treatPhpDocTypesAsCertain: false
+
+    drupal:
+        drupal_root: web

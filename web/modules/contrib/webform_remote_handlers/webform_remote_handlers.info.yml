@@ -1,0 +1,12 @@
+name: Webform Remote Handlers
+type: module
+description: Provides Webform handlers that integrate with a REST or SOAP servers.
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+package: Webform
+dependencies:
+  - webform:webform
+
+# Information added by Drupal.org packaging script on 2024-11-18
+version: '3.0.7'
+project: 'webform_remote_handlers'
+datestamp: 1731921169

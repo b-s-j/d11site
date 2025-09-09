@@ -1,0 +1,17 @@
+uuid: f861a1de-ca9c-4bf6-977d-f628ea1ab8bd
+langcode: en
+status: true
+dependencies:
+  module:
+    - webform_scheduled_email
+title: 'Sends scheduled emails for submissions'
+id: webform_scheduled_email_cron
+weight: 0
+module: webform_scheduled_email
+callback: 'webform_scheduled_email#cron'
+scheduler:
+  id: simple
+launcher:
+  id: serial
+logger:
+  id: database
