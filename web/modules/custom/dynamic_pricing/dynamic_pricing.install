@@ -110,8 +110,9 @@ function drah_webform_schema() {
 
 /**
  * Implements hook_install().
+ * I need to create a account verification on my drahwebform created on my UI out of this to test and see if the account verification and validations are working.
  */
-function dynamic_pricing_install() {
+function drah_webform_install() {
   // Sample data: 5 individual accounts, 5 business accounts.
   $valid_entries = [
     // INDIVIDUAL ACCOUNTS (is_business = 0)
