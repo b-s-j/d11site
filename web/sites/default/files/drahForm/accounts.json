@@ -1,0 +1,67 @@
+[
+  {
+    "account_number": "234987332749",
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@example.com",
+    "is_business": false
+  },
+  {
+    "account_number": "483920174651",
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "email": "jane.smith@example.com",
+    "is_business": false
+  },
+  {
+    "account_number": "109283746592",
+    "first_name": "Alice",
+    "last_name": "Johnson",
+    "email": "alice.johnson@example.com",
+    "is_business": false
+  },
+  {
+    "account_number": "837465192038",
+    "first_name": "Bob",
+    "last_name": "Williams",
+    "email": "bob.williams@example.com",
+    "is_business": false
+  },
+  {
+    "account_number": "564738291056",
+    "first_name": "Charlie",
+    "last_name": "Brown",
+    "email": "charlie.brown@example.com",
+    "is_business": false
+  },
+  {
+    "account_number": "BUS001",
+    "business_name": "Acme Corp",
+    "email": "contact@acmecorp.com",
+    "is_business": true
+  },
+  {
+    "account_number": "BUS002",
+    "business_name": "Global Tech",
+    "email": "info@globaltech.com",
+    "is_business": true
+  },
+  {
+    "account_number": "BUS003",
+    "business_name": "Sunrise Ltd",
+    "email": "hello@sunrise.com",
+    "is_business": true
+  },
+  {
+    "account_number": "BUS004",
+    "business_name": "Innovate Co",
+    "email": "team@innovate.co",
+    "is_business": true
+  },
+  {
+    "account_number": "BUS005",
+    "business_name": "NextGen Solutions",
+    "email": "support@nextgen.com",
+    "is_business": true
+  }
+]

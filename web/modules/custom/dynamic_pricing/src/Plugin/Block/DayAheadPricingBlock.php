@@ -4,8 +4,8 @@ namespace Drupal\dynamic_pricing\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Extension\ModuleExtensionList;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a Dynamic Pricing block.
@@ -30,14 +30,14 @@ class DayAheadPricingBlock extends BlockBase implements ContainerFactoryPluginIn
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
-   * @param mixed $plugin_id
+   * @param string $plugin_id
    *   The plugin ID for the block.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
    * @param \Drupal\Core\Extension\ModuleExtensionList $moduleExtensionList
    *   The module extension list service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ModuleExtensionList $moduleExtensionList) {
+  public function __construct(array $configuration, string $plugin_id, $plugin_definition, ModuleExtensionList $moduleExtensionList) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->moduleExtensionList = $moduleExtensionList;
   }
@@ -45,8 +45,8 @@ class DayAheadPricingBlock extends BlockBase implements ContainerFactoryPluginIn
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
+    return new self(
       $configuration,
       $plugin_id,
       $plugin_definition,
@@ -98,7 +98,8 @@ class DayAheadPricingBlock extends BlockBase implements ContainerFactoryPluginIn
         }
         if ($item['date'] === $first_date) {
           $today_data[] = $item;
-        } else {
+        }
+        else {
           $tomorrow_data[] = $item;
         }
       }

@@ -3,12 +3,39 @@
 namespace Drupal\dynamic_pricing\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-
+use Drupal\Core\Extension\ModuleExtensionList;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Controller for Dynamic Pricing.
  */
 class DynamicPricingController extends ControllerBase {
+
+  /**
+   * The module extension list service.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected ModuleExtensionList $moduleExtensionList;
+
+  /**
+   * Constructs a new DynamicPricingController.
+   *
+   * @param \Drupal\Core\Extension\ModuleExtensionList $moduleExtensionList
+   *   The module extension list service.
+   */
+  public function __construct(ModuleExtensionList $moduleExtensionList) {
+    $this->moduleExtensionList = $moduleExtensionList;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): self {
+    return new self(
+      $container->get('extension.list.module')
+    );
+  }
 
   /**
    * Loads pricing data from JSON file.
@@ -17,7 +44,7 @@ class DynamicPricingController extends ControllerBase {
    *   Array of pricing data items.
    */
   private function loadPricingData(): array {
-    $module_path = \Drupal::service('extension.list.module')->getPath('dynamic_pricing');
+    $module_path = $this->moduleExtensionList->getPath('dynamic_pricing');
     $file_path = DRUPAL_ROOT . '/' . $module_path . '/dynamic-data.json';
 
     if (!file_exists($file_path)) {
