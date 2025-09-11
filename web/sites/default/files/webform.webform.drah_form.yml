@@ -1,0 +1,498 @@
+uuid: fea8ca6b-49ad-462d-9a16-884bdd39bd0a
+langcode: en
+status: open
+dependencies:
+  module:
+    - webform_entity_print
+third_party_settings:
+  webform_entity_print:
+    template:
+      header: ''
+      footer: ''
+      css: ''
+    export_types:
+      pdf:
+        enabled: false
+        link_text: ''
+        link_attributes: {  }
+weight: 0
+open: null
+close: null
+uid: 1
+template: false
+archive: false
+id: drah_form
+title: 'Drah Form'
+description: 'this is just a replicating the ui and logic web handlers of sdge drah'
+categories: {  }
+elements: |-
+  eligibility:
+    '#type': webform_wizard_page
+    '#title': Eligibility
+    '#open': true
+    elig1_container:
+      '#type': container
+      deed_body_message:
+        '#type': webform_section
+        '#title': 'Deed-Restricted Affordable Housing Attestation for Eligible Customers'
+        '#description': |-
+          Deed-Restricted Affordable Housing (DRAH) are rental properties on the California Housing Partnership's (CHP) affordable housing list, requiring residents to earn 80% or less of the Area Median Income. Customers living in DRAH properties on the CHP list are eligible for a discounted Base Services Charge of approximately $12.00 a month.
+
+           
+          SDG&E sent letters or emails to customers who may live in an eligible DRAH property. If you received a letter or email and live in a DRAH property, you must affirm your eligibility by filling out the attestation form below in order to receive the discounted Base Services Charge.  After your form is processed, you’ll see any eligible Base Services Charge discounts reflected on future bills.
+
+           
+          If you do NOT live in an eligible DRAH unit, you do not need to do anything. For more information, visit chpc.net.
+        '#description_display': before
+      did_you_receive_a_letter_from_sdg_e_asking_you_to_attest_to_livi:
+        '#type': select
+        '#title': 'Did you receive a letter from SDG&E asking you to attest to living in a Deed Restricted Affordable unit?'
+        '#title_display': before
+        '#options':
+          'Yes': 'Yes'
+          'No': 'No'
+        '#select2': true
+        '#required': true
+      do_you_live_in_an_affordable_rental_home_subject_to_federal_or_s:
+        '#type': select
+        '#title': 'Do you live in an affordable rental home subject to federal or state subsidy restrictions for residents with income at or below 80% of the Area Median Income?'
+        '#title_display': before
+        '#options':
+          'Yes': 'Yes'
+          'No': 'No'
+        '#select2': true
+        '#required': true
+        '#states':
+          visible:
+            ':input[name="did_you_receive_a_letter_from_sdg_e_asking_you_to_attest_to_livi"]':
+              value: 'Yes'
+      validation_if_answer_is_no:
+        '#type': webform_section
+        '#title': 'validation if answer is no '
+        '#description': 'Only properties that are listed on the California Housing Partnership list are eligible for the DRAH discounted Base Services Charge. To be eligible you must have received a letter or email from SDG&E asking you to attest. See if you qualify for an income-based discount on your Base Services Charge through enrollment in one of SDG&E’s assistance programs at sdge.com/assistance.'
+        '#title_display': invisible
+        '#description_display': after
+        '#required': true
+        '#states':
+          visible:
+            - ':input[name="did_you_receive_a_letter_from_sdg_e_asking_you_to_attest_to_livi"]':
+                value: 'No'
+            - or
+            - ':input[name="do_you_live_in_an_affordable_rental_home_subject_to_federal_or_s"]':
+                value: 'No'
+  account_verification:
+    '#type': webform_wizard_page
+    '#title': 'Account Verification'
+    '#open': true
+    ac_container:
+      '#type': container
+      deed_restricted_affordable_housing_attestation_for_eligible_cust:
+        '#type': webform_section
+        '#title': 'Deed-Restricted Affordable Housing Attestation for Eligible Customers'
+        '#description_display': before
+        account_number:
+          '#type': fieldset
+          '#title': 'Account Number'
+          '#help_title': 'Required Fields'
+          '#description_display': before
+          '#help_display': title_before
+          '#required': true
+          sdg_e_account_number:
+            '#type': textfield
+            '#title': 'SDG&E Account Number'
+            '#description': 'First 12 digits of your account number is found at the top of your bill. If you can’t find it, try logging into My Energy Center.'
+            '#title_display': before
+            '#description_display': after
+            '#minlength': 1
+            '#maxlength': 12
+            '#size': 500
+            '#autocomplete': 'off'
+            '#required': true
+            '#unique': true
+        account_type:
+          '#type': fieldset
+          '#title': 'Account Type'
+          is_your_account_in_a_business_name:
+            '#type': radios
+            '#title': 'Is your account in a business name? '
+            '#title_display': before
+            '#options':
+              'No': 'No'
+              'Yes': 'Yes'
+            '#required': true
+        account_holder:
+          '#type': fieldset
+          '#title': 'Account Holder'
+          '#description': 'Enter the primary account holder’s name or the co-application name. You may not attest if your name is not on the account. You must enter your first and last name exactly as it is displayed on your bill.'
+          '#description_display': before
+          '#states':
+            visible:
+              ':input[name="is_your_account_in_a_business_name"]':
+                value: 'No'
+          key_flexbox_account:
+            '#type': webform_flexbox
+            account_holder_first_name:
+              '#type': textfield
+              '#title': 'Account Holder First Name'
+              '#title_display': before
+              '#input_mask': "'casing': 'upper'"
+              '#required': true
+            account_holder_last_name:
+              '#type': textfield
+              '#title': ' Account Holder Last Name'
+              '#title_display': before
+              '#input_mask': "'casing': 'upper'"
+              '#required': true
+          i_am_the_account_holder_or_co_applicant:
+            '#type': checkbox
+            '#title': 'I am the account holder or co-applicant. '
+            '#required': true
+    business_information:
+      '#type': fieldset
+      '#title': 'Business Information'
+      '#description': 'You must enter your business name exactly as it is displayed on your bill.'
+      '#description_display': before
+      '#states':
+        visible:
+          ':input[name="is_your_account_in_a_business_name"]':
+            value: 'Yes'
+      business_name:
+        '#type': textfield
+        '#title': 'Business Name'
+        '#required': true
+    account_email:
+      '#type': fieldset
+      '#title': Email
+      '#description': 'If you would like a confirmation of this form emailed to you, please enter a valid email address. Entering an email address here will not update your SDG&E account information.'
+      '#description_display': before
+      email:
+        '#type': textfield
+        '#title': Email
+        '#title_display': before
+        '#input_mask': "'alias': 'email'"
+        '#required': true
+    deed_restricted_affordable_house_attestation:
+      '#type': fieldset
+      '#title': 'Deed-Restricted Affordable House Attestation'
+      '#description': 'By checking below, I attest to the following information:'
+      '#description_display': before
+      first_certify_reside:
+        '#type': checkbox
+        '#title': 'I certify that I reside at the property associated with the account number above and that my unit is an affordable rental home subject to federal or state subsidy restrictions for residents with income at or below 80% of the Area Median Income.'
+        '#required': true
+      certify_attest_2:
+        '#type': checkbox
+        '#title': 'I understand that to be considered a DRAH customer, my property must be listed as a deed-restricted affordable property with the California Housing Partnership (CHP). If the property is removed from the CHP list or I relocate, I will no longer be eligible for a discounted Base Services Charge.'
+        '#required': true
+  actions:
+    '#type': webform_actions
+    '#title': 'Submit button(s)'
+    '#states':
+      disabled:
+        - ':input[name="did_you_receive_a_letter_from_sdg_e_asking_you_to_attest_to_livi"]':
+            value: 'No'
+        - or
+        - ':input[name="do_you_live_in_an_affordable_rental_home_subject_to_federal_or_s"]':
+            value: 'No'
+    '#submit__label': Submit
+    '#update_hide': true
+    '#wizard_prev_hide': true
+    '#wizard_next__label': Next
+    '#delete_hide': false
+    '#delete__label': Reset
+css: |
+  .webform-submission-form .form-action{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .webform-submission-form .webform-button--next{
+    margin-left: auto;
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* Hover effect */
+  .webform-button--next.button.js-form-submit.form-submit.cv-validate-before-ajax:hover {
+    background-color: #218838;
+  }
+
+  /* Responsive adjustment for mobile */
+  @media (max-width: 600px) {
+    .webform-button--next.button.js-form-submit.form-submit.cv-validate-before-ajax {
+      width: 100%;
+      float: none;
+      text-align: center;
+    }
+  }
+
+
+  /* Center align and customize font for section titles */
+  .webform-section-title {
+    text-align: center;
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    font-size: 2.5rem; 
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+javascript: |
+  (function ($, Drupal) {
+    Drupal.behaviors.blockNextIfNo = {
+      attach: function (context, settings) {
+        $('.webform-submission-form', context).once('blockNextIfNo').each(function () {
+          const $form = $(this);
+          const $nextButton = $form.find('#edit-wizard-next');
+
+          function checkEligibility() {
+            const val1 = $form.find('select[name="did_you_receive_a_letter_from_sdg_e_asking_you_to_attest_to_livi"]').val();
+            const val2 = $form.find('select[name="do_you_live_in_an_affordable_rental_home_subject_to_federal_or_s"]').val();
+
+            if (val1 === 'No' || val2 === 'No') {
+              $nextButton.prop('disabled', true).css({
+                'opacity': '0.5',
+                'cursor': 'not-allowed'
+              });
+            } else {
+              $nextButton.prop('disabled', false).css({
+                'opacity': '1',
+                'cursor': 'pointer'
+              });
+            }
+          }
+
+          // Initial check
+          checkEligibility();
+
+          // Re-check on change
+          $form.find('select').on('change', checkEligibility);
+        });
+      }
+    };
+  })(jQuery, Drupal);
+settings:
+  ajax: false
+  ajax_scroll_top: form
+  ajax_progress_type: ''
+  ajax_effect: ''
+  ajax_speed: null
+  page: true
+  page_submit_path: ''
+  page_confirm_path: ''
+  page_theme_name: claro
+  form_title: both
+  form_submit_once: false
+  form_open_message: ''
+  form_close_message: ''
+  form_exception_message: ''
+  form_previous_submissions: true
+  form_confidential: false
+  form_confidential_message: ''
+  form_disable_remote_addr: false
+  form_convert_anonymous: false
+  form_prepopulate: false
+  form_prepopulate_source_entity: false
+  form_prepopulate_source_entity_required: false
+  form_prepopulate_source_entity_type: ''
+  form_unsaved: false
+  form_disable_back: false
+  form_submit_back: false
+  form_disable_autocomplete: false
+  form_novalidate: false
+  form_disable_inline_errors: false
+  form_required: false
+  form_autofocus: false
+  form_details_toggle: false
+  form_reset: false
+  form_access_denied: default
+  form_access_denied_title: ''
+  form_access_denied_message: ''
+  form_access_denied_attributes: {  }
+  form_file_limit: ''
+  form_attributes: {  }
+  form_method: ''
+  form_action: ''
+  share: false
+  share_node: false
+  share_theme_name: ''
+  share_title: true
+  share_page_body_attributes: {  }
+  submission_label: '[webform_submission:values:account_holder_first_name] [webform_submission:values:account_holder_last_name] - SDG&E #[webform_submission:values:sdg_e_account_number]'
+  submission_exception_message: 'Oops! Something went wrong while processing your submission. Please try again later or contact support.'
+  submission_locked_message: 'This submission is locked and cannot be changed.'
+  submission_log: true
+  submission_excluded_elements: {  }
+  submission_exclude_empty: false
+  submission_exclude_empty_checkbox: false
+  submission_views: {  }
+  submission_views_replace: {  }
+  submission_user_columns: {  }
+  submission_user_duplicate: false
+  submission_access_denied: default
+  submission_access_denied_title: ''
+  submission_access_denied_message: ''
+  submission_access_denied_attributes: {  }
+  previous_submission_message: 'You have already submitted this form. <a href="[webform_submission:token-view-url]">View your submission</a>.'
+  previous_submissions_message: 'Here are your previous submissions: <a href="[webform_submission:token-view-url]">View them</a>.'
+  autofill: false
+  autofill_message: ''
+  autofill_excluded_elements: {  }
+  wizard_progress_bar: true
+  wizard_progress_pages: false
+  wizard_progress_percentage: false
+  wizard_progress_link: false
+  wizard_progress_states: false
+  wizard_start_label: ''
+  wizard_preview_link: false
+  wizard_confirmation: true
+  wizard_confirmation_label: ''
+  wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
+  wizard_track: ''
+  wizard_prev_button_label: ''
+  wizard_next_button_label: ''
+  wizard_toggle: false
+  wizard_toggle_show_label: ''
+  wizard_toggle_hide_label: ''
+  wizard_page_type: container
+  wizard_page_title_tag: h2
+  preview: 0
+  preview_label: ''
+  preview_title: ''
+  preview_message: ''
+  preview_attributes: {  }
+  preview_excluded_elements: {  }
+  preview_exclude_empty: true
+  preview_exclude_empty_checkbox: false
+  draft: none
+  draft_multiple: false
+  draft_auto_save: false
+  draft_saved_message: ''
+  draft_loaded_message: ''
+  draft_pending_single_message: ''
+  draft_pending_multiple_message: ''
+  confirmation_type: page
+  confirmation_url: ''
+  confirmation_title: ''
+  confirmation_message: ''
+  confirmation_attributes: {  }
+  confirmation_back: false
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
+  confirmation_exclude_query: false
+  confirmation_exclude_token: false
+  confirmation_update: false
+  limit_total: null
+  limit_total_interval: null
+  limit_total_message: ''
+  limit_total_unique: false
+  limit_user: null
+  limit_user_interval: null
+  limit_user_message: ''
+  limit_user_unique: false
+  entity_limit_total: null
+  entity_limit_total_interval: null
+  entity_limit_user: null
+  entity_limit_user_interval: null
+  purge: none
+  purge_days: null
+  results_disabled: false
+  results_disabled_ignore: false
+  results_customize: false
+  token_view: false
+  token_update: false
+  token_delete: false
+  serial_disabled: false
+access:
+  create:
+    roles:
+      - anonymous
+      - authenticated
+    users: {  }
+    permissions: {  }
+  view_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  update_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  delete_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  purge_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  view_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  update_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  delete_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  administer:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  test:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  configuration:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+handlers:
+  email:
+    id: email
+    handler_id: email
+    label: Email
+    notes: ''
+    status: true
+    conditions: {  }
+    weight: 0
+    settings:
+      states:
+        - completed
+      to_mail: paul25bern@gmail.com
+      to_options: {  }
+      bcc_mail: ''
+      bcc_options: {  }
+      cc_mail: ''
+      cc_options: {  }
+      from_mail: _default
+      from_options: {  }
+      from_name: _default
+      reply_to: ''
+      return_path: ''
+      sender_mail: ''
+      sender_name: ''
+      subject: _default
+      body: _default
+      excluded_elements: {  }
+      ignore_access: false
+      exclude_empty: true
+      exclude_empty_checkbox: false
+      exclude_attachments: false
+      html: true
+      attachments: false
+      twig: false
+      theme_name: ''
+      parameters: {  }
+      debug: false
+variants: {  }
