@@ -66,24 +66,27 @@ class DrahAccountValidator extends WebformHandlerBase {
   /**
    * {@inheritdoc}
    */
-  public function postSave(WebformSubmissionInterface $webform_submission, $update = TRUE) {
-    $data = $webform_submission->getData();
-    $save_file = DRUPAL_ROOT . '/sites/default/files/drahForm/submissions.json';
+  // public function postSave(WebformSubmissionInterface $webform_submission, $update = TRUE) {
+  //   $data = $webform_submission->getData();
+  //   $save_file = DRUPAL_ROOT . '/sites/default/files/drahForm/submissions.json';
 
-    $existing_data = file_exists($save_file) ? json_decode(file_get_contents($save_file), TRUE) ?? [] : [];
+  //   $existing_data = file_exists($save_file) ? json_decode(file_get_contents($save_file), TRUE) ?? [] : [];
 
-    $existing_data[] = [
-      'account_number' => $data['sdg_e_account_number'] ?? '',
-      'is_business' => strtoupper(trim($data['is_your_account_in_a_business_name'] ?? 'NO')),
-      'first_name' => $data['account_holder_first_name'] ?? '',
-      'last_name' => $data['account_holder_last_name'] ?? '',
-      'business_name' => $data['business_name'] ?? '',
-      'email' => $data['email'] ?? '',
-      'timestamp' => \Drupal::time()->getCurrentTime(),
-    ];
+  //   $existing_data[] = [
+  //     'account_number' => $data['sdg_e_account_number'] ?? '',
+  //     'is_business' => strtoupper(trim($data['is_your_account_in_a_business_name'] ?? 'NO')),
+  //     'first_name' => $data['account_holder_first_name'] ?? '',
+  //     'last_name' => $data['account_holder_last_name'] ?? '',
+  //     'business_name' => $data['business_name'] ?? '',
+  //     'email' => $data['email'] ?? '',
+  //     'timestamp' => \Drupal::time()->getCurrentTime(),
+  //   ];
 
-    file_put_contents($save_file, json_encode($existing_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+  //   file_put_contents($save_file, json_encode($existing_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
 
-  }
+  // }
+
+  // webform custom confirmation
+
 }
