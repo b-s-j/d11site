@@ -55,12 +55,7 @@ class Oauth2ScopePluginAdapter implements Oauth2ScopeAdapterInterface, Container
    * {@inheritdoc}
    */
   public function loadMultiple(?array $ids = NULL): array {
-    try {
-      return $this->scopeManager->getInstances($ids);
-    }
-    catch (PluginNotFoundException $e) {
-      return [];
-    }
+    return $this->scopeManager->getInstances($ids);
   }
 
   /**

@@ -17,7 +17,8 @@ function my_module_theme(array $existing, $type, $theme, $path) {
   return $items;
 }
 
-// hook attachment
+// Implrmrnt hook attachment
 function my_module_attachment(array &$build): void {
   $build['#attached']['library'][] = 'my_module/my_module';
 }
+

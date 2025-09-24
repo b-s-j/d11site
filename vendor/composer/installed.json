@@ -2385,18 +2385,18 @@
         },
         {
             "name": "drupal/eca",
-            "version": "3.0.2",
-            "version_normalized": "3.0.2.0",
+            "version": "3.0.3",
+            "version_normalized": "3.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/eca.git",
-                "reference": "3.0.2"
+                "reference": "3.0.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/eca-3.0.2.zip",
-                "reference": "3.0.2",
-                "shasum": "f7ccbfb7945a76643c89297badd934c655593089"
+                "url": "https://ftp.drupal.org/files/projects/eca-3.0.3.zip",
+                "reference": "3.0.3",
+                "shasum": "764d9ce999cced47e6c3e774aafd1cd96d2b2956"
             },
             "require": {
                 "dragonmantank/cron-expression": "^3.1",
@@ -2409,8 +2409,8 @@
                 "drush/drush": "<12.5.1"
             },
             "require-dev": {
-                "drupal/ai": "^1.2",
-                "drupal/ai_agents": "^1.2",
+                "drupal/ai": "1.2.x-dev",
+                "drupal/ai_agents": "1.2.x-dev",
                 "drupal/entity_reference_revisions": "^1.12",
                 "drupal/inline_entity_form": "^3.0",
                 "drupal/modeler_api": "*",
@@ -2422,8 +2422,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.0.2",
-                    "datestamp": "1755341165",
+                    "version": "3.0.3",
+                    "datestamp": "1757505170",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3419,18 +3419,18 @@
         },
         {
             "name": "drupal/simple_oauth",
-            "version": "6.0.0",
-            "version_normalized": "6.0.0.0",
+            "version": "6.0.1",
+            "version_normalized": "6.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/simple_oauth.git",
-                "reference": "6.0.0"
+                "reference": "6.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/simple_oauth-6.0.0.zip",
-                "reference": "6.0.0",
-                "shasum": "a19c2ef0cbfae431af0e92ea5c89d7514cd7c238"
+                "url": "https://ftp.drupal.org/files/projects/simple_oauth-6.0.1.zip",
+                "reference": "6.0.1",
+                "shasum": "99a89daa914641feb5d432ab50f29fcb1504cc48"
             },
             "require": {
                 "drupal/consumers": "^1.17",
@@ -3446,8 +3446,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "6.0.0",
-                    "datestamp": "1741341101",
+                    "version": "6.0.1",
+                    "datestamp": "1757918288",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3472,6 +3472,10 @@
                 {
                     "name": "e0ipso",
                     "homepage": "https://www.drupal.org/user/550110"
+                },
+                {
+                    "name": "kingdutch",
+                    "homepage": "https://www.drupal.org/user/1868952"
                 },
                 {
                     "name": "pcambra",
@@ -3630,18 +3634,18 @@
         },
         {
             "name": "drupal/webform",
-            "version": "6.3.0-beta4",
-            "version_normalized": "6.3.0.0-beta4",
+            "version": "6.3.0-beta5",
+            "version_normalized": "6.3.0.0-beta5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/webform.git",
-                "reference": "6.3.0-beta4"
+                "reference": "6.3.0-beta5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/webform-6.3.0-beta4.zip",
-                "reference": "6.3.0-beta4",
-                "shasum": "9f5390f1eb507cdc9b591595c12d91f7f51c7b81"
+                "url": "https://ftp.drupal.org/files/projects/webform-6.3.0-beta5.zip",
+                "reference": "6.3.0-beta5",
+                "shasum": "970ce4f5c2c2da450bd1edf245ac2ccd8705e281"
             },
             "require": {
                 "drupal/core": "^10.3 || ^11.0"
@@ -3650,16 +3654,16 @@
                 "drupal/address": "^2.0",
                 "drupal/captcha": "^2.0",
                 "drupal/chosen": "^4.0",
-                "drupal/clientside_validation": "*",
+                "drupal/clientside_validation": "^4.1",
                 "drupal/clientside_validation_jquery": "*",
-                "drupal/devel": "*",
+                "drupal/devel": "^5.3",
                 "drupal/entity": "^1.5",
-                "drupal/entity_print": "*",
+                "drupal/entity_print": "^2.15",
                 "drupal/hal": "^2.0",
                 "drupal/jquery_ui": "^1.7",
-                "drupal/jquery_ui_button": "*",
+                "drupal/jquery_ui_button": "^2.1",
                 "drupal/jquery_ui_checkboxradio": "^2.1",
-                "drupal/jquery_ui_datepicker": "*",
+                "drupal/jquery_ui_datepicker": "^2.1",
                 "drupal/mailsystem": "^4.5",
                 "drupal/metatag": "^2.0",
                 "drupal/paragraphs": "^1.18",
@@ -3667,7 +3671,7 @@
                 "drupal/smtp": "^1.4",
                 "drupal/styleguide": "^2.1",
                 "drupal/telephone_validation": "2.x-dev",
-                "drupal/token": "*",
+                "drupal/token": "^1.15",
                 "drupal/webform_access": "*",
                 "drupal/webform_attachment": "*",
                 "drupal/webform_clientside_validation": "*",
@@ -3686,8 +3690,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "6.3.0-beta4",
-                    "datestamp": "1753796919",
+                    "version": "6.3.0-beta5",
+                    "datestamp": "1758581720",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."

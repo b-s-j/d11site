@@ -7,7 +7,7 @@ dependencies:
   - eca:eca
   - project_browser:project_browser
 
-# Information added by Drupal.org packaging script on 2025-08-16
-version: '3.0.2'
+# Information added by Drupal.org packaging script on 2025-09-10
+version: '3.0.3'
 project: 'eca'
-datestamp: 1755341168
+datestamp: 1757505172

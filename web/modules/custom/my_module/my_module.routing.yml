@@ -5,3 +5,4 @@ my_module.example:
     _controller: '\Drupal\my_module\Controller\MyModuleController::viewTable'
   requirements:
     _permission: 'access content'
+

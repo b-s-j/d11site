@@ -5,6 +5,8 @@ namespace Drupal\simple_oauth\Authentication\Provider;
 use Drupal\Core\Authentication\AuthenticationProviderInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Path\PathValidatorInterface;
+use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\simple_oauth\Authentication\TokenAuthUser;
 use Drupal\simple_oauth\Exception\OAuthUnauthorizedHttpException;
 use Drupal\simple_oauth\PageCache\SimpleOauthRequestPolicyInterface;
@@ -16,6 +18,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * OAuth2 authentication provider.
+ *
+ * Routes can opt out of OAuth authentication by setting the '_oauth_skip_auth'
+ * option to TRUE in their route definition:
+ *
+ * @code
+ * example.route:
+ *   path: '/example'
+ *   # ...
+ *   options:
+ *     _oauth_skip_auth: TRUE
+ * @endcode
  *
  * @internal
  */
@@ -59,6 +72,20 @@ class SimpleOauthAuthenticationProvider implements AuthenticationProviderInterfa
   protected HttpFoundationFactoryInterface $httpFoundationFactory;
 
   /**
+   * The path validator service.
+   *
+   * @var \Drupal\Core\Path\PathValidatorInterface
+   */
+  protected PathValidatorInterface $pathValidator;
+
+  /**
+   * The route provider service.
+   *
+   * @var \Drupal\Core\Routing\RouteProviderInterface
+   */
+  protected RouteProviderInterface $routeProvider;
+
+  /**
    * Constructs an HTTP basic authentication provider object.
    *
    * @param \Drupal\simple_oauth\Server\ResourceServerFactoryInterface $resource_server_factory
@@ -71,6 +98,10 @@ class SimpleOauthAuthenticationProvider implements AuthenticationProviderInterfa
    *   The HTTP message factory.
    * @param \Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface $http_foundation_factory
    *   The HTTP foundation factory.
+   * @param \Drupal\Core\Path\PathValidatorInterface $path_validator
+   *   The path validator service.
+   * @param \Drupal\Core\Routing\RouteProviderInterface $route_provider
+   *   The route provider service.
    */
   public function __construct(
     ResourceServerFactoryInterface $resource_server_factory,
@@ -78,18 +109,33 @@ class SimpleOauthAuthenticationProvider implements AuthenticationProviderInterfa
     SimpleOauthRequestPolicyInterface $page_cache_request_policy,
     HttpMessageFactoryInterface $http_message_factory,
     HttpFoundationFactoryInterface $http_foundation_factory,
+    PathValidatorInterface $path_validator,
+    RouteProviderInterface $route_provider,
   ) {
     $this->resourceServerFactory = $resource_server_factory;
     $this->entityTypeManager = $entity_type_manager;
     $this->oauthPageCacheRequestPolicy = $page_cache_request_policy;
     $this->httpMessageFactory = $http_message_factory;
     $this->httpFoundationFactory = $http_foundation_factory;
+    $this->pathValidator = $path_validator;
+    $this->routeProvider = $route_provider;
   }
 
   /**
    * {@inheritdoc}
    */
   public function applies(Request $request) {
+    // Retrieve the route name and fetch the route name without access checks.
+    $url_object = $this->pathValidator->getUrlIfValidWithoutAccessCheck($request->getPathInfo());
+    if ($url_object) {
+      $route_name = $url_object->getRouteName();
+      $route = $this->routeProvider->getRouteByName($route_name);
+      // Check if the current route has opted out of OAuth authentication.
+      if ($route && $route->getOption('_oauth_skip_auth')) {
+        return FALSE;
+      }
+    }
+
     // The request policy service won't be used in case of non GET or HEAD
     // methods, so we have to explicitly call it.
     /* @see \Drupal\Core\PageCache\RequestPolicy\CommandLineOrUnsafeMethod::check() */

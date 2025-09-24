@@ -14,6 +14,7 @@ use Drupal\eca\Event\Tag;
 use Drupal\eca\Plugin\ECA\Event\EventBase;
 use Drupal\eca\Plugin\FormFieldMachineName;
 use Drupal\eca\Plugin\PluginUsageInterface;
+use Drupal\eca_render\Event\EcaRenderAlterLinkEvent;
 use Drupal\eca_render\Event\EcaRenderBlockEvent;
 use Drupal\eca_render\Event\EcaRenderContextualLinksEvent;
 use Drupal\eca_render\Event\EcaRenderEntityEvent;
@@ -95,6 +96,13 @@ class RenderEvent extends EventBase implements PluginUsageInterface {
       'event_name' => RenderEvents::CONTEXTUAL_LINKS,
       'event_class' => EcaRenderContextualLinksEvent::class,
       'tags' => Tag::RUNTIME | Tag::CONFIG | Tag::CONTENT,
+    ];
+    $definitions['alter_link'] = [
+      'label' => 'ECA alter link',
+      'event_name' => RenderEvents::ALTER_LINK,
+      'event_class' => EcaRenderAlterLinkEvent::class,
+      'tags' => Tag::RUNTIME | Tag::CONFIG | Tag::CONTENT,
+      'version_introduced' => '3.0.3',
     ];
     $definitions['local_tasks'] = [
       'label' => 'ECA local tasks',
@@ -578,6 +586,9 @@ class RenderEvent extends EventBase implements PluginUsageInterface {
       new Token(name: 'view_args:?', description: 'The list of arguments given to the view.', classes: [
         EcaRenderViewsFieldEvent::class,
       ]),
+      new Token(name: 'variables:?', description: 'The variables of the link to be rendered.', classes: [
+        EcaRenderAlterLinkEvent::class,
+      ]),
     ]
   )]
   protected function buildEventData(): array {
@@ -619,6 +630,11 @@ class RenderEvent extends EventBase implements PluginUsageInterface {
         'view_args' => $event->getFieldPlugin()->view->args,
         'view_id' => $event->getFieldPlugin()->view->id(),
         'view_display' => $event->getFieldPlugin()->view->current_display,
+      ];
+    }
+    elseif ($event instanceof EcaRenderAlterLinkEvent) {
+      $data += [
+        'variables' => $event->getVariables(),
       ];
     }
 

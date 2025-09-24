@@ -30,6 +30,10 @@ eca.event.plugin.eca_render:contextual_links:
       type: string
       label: 'Restrict by link group'
 
+eca.event.plugin.eca_render:alter_link:
+  type: eca.event.plugin
+  label: 'Alter Link'
+
 eca.event.plugin.eca_render:entity:
   type: eca.event.eca_render_base
   label: 'Entity'
@@ -347,3 +351,75 @@ action.configuration.eca_render_unserialize:serialization:
     type:
       type: string
       label: 'Type'
+
+action.configuration.eca_render_alter_link_add_attribute:
+  type: eca_render.action_base
+  label: 'Render: alter link, add attribute'
+  mapping:
+    key:
+      type: string
+      label: 'Key'
+    value:
+      type: string
+      label: 'Value'
+    reset:
+      type: boolean
+      label: 'Reset'
+action.configuration.eca_render_alter_link_add_class:
+  type: eca_render.action_base
+  label: 'Render: alter link, add class'
+  mapping:
+    class:
+      type: string
+      label: 'Class'
+    reset:
+      type: boolean
+      label: 'Reset'
+action.configuration.eca_render_alter_link_add_query_argument:
+  type: eca_render.action_base
+  label: 'Render: alter link, add query argument'
+  mapping:
+    key:
+      type: string
+      label: 'Key'
+    value:
+      type: string
+      label: 'Value'
+    reset:
+      type: boolean
+      label: 'Reset'
+action.configuration.eca_render_alter_link_set_absolute:
+  type: eca_render.action_base
+  label: 'Render: alter link, set absolute'
+  mapping:
+    absolute:
+      type: boolean
+      label: 'Absolute'
+action.configuration.eca_render_alter_link_set_language:
+  type: eca_render.action_base
+  label: 'Render: alter link, set language'
+  mapping:
+    langcode:
+      type: string
+      label: 'Language'
+action.configuration.eca_render_alter_link_set_text:
+  type: eca_render.action_base
+  label: 'Render: alter link, set visible text'
+  mapping:
+    text:
+      type: label
+      label: 'Text'
+action.configuration.eca_render_alter_link_set_title:
+  type: eca_render.action_base
+  label: 'Render: alter link, set title'
+  mapping:
+    title:
+      type: label
+      label: 'title'
+action.configuration.eca_render_alter_link_url:
+  type: eca_render.action_base
+  label: 'Render: alter link, set url'
+  mapping:
+    url:
+      type: string
+      label: 'Url'

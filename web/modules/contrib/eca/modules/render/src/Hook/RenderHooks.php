@@ -225,6 +225,14 @@ class RenderHooks {
   }
 
   /**
+   * Implements hook_link_alter().
+   */
+  #[Hook('link_alter')]
+  public function linkAlter(array &$variables): void {
+    $this->triggerEvent->dispatchFromPlugin('eca_render:alter_link', $variables);
+  }
+
+  /**
    * Implements hook_menu_local_tasks_alter().
    */
   #[Hook('menu_local_tasks_alter')]

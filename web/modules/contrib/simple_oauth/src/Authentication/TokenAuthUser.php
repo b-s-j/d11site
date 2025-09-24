@@ -926,4 +926,11 @@ class TokenAuthUser implements TokenAuthUserInterface {
     return $this->subject->setOriginal($original);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getBundleEntity(): ?EntityInterface {
+    return $this->subject->getBundleEntity();
+  }
+
 }

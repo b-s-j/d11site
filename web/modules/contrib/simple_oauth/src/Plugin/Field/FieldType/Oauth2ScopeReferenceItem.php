@@ -17,6 +17,7 @@ use Drupal\simple_oauth\Oauth2ScopeInterface;
  *   label = @Translation("OAuth2 scope reference"),
  *   description = @Translation("An entity field containing a oauth2_scope reference."),
  *   category = "reference",
+ *   no_ui = TRUE,
  *   default_widget = "oauth2_scope_reference",
  *   list_class = "\Drupal\simple_oauth\Plugin\Field\FieldType\Oauth2ScopeReferenceItemList",
  * )

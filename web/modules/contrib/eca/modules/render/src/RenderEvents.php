@@ -44,6 +44,15 @@ final class RenderEvents {
   public const CONTEXTUAL_LINKS = 'eca_render.contextual_links';
 
   /**
+   * Dispatches when a link gets altered.
+   *
+   * @Event
+   *
+   * @var string
+   */
+  public const ALTER_LINK = 'eca_render.alter_link';
+
+  /**
    * Dispatches when local tasks are being rendered.
    *
    * @Event
